@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Union County Flood Status</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap">
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f5f7;
+        margin: 0;
+        padding: 32px;
+        color: #333;
+    }
+
+    h2 {
+        text-align: center;
+        color: #1259a7;
+        font-size: 2rem;
+        margin-bottom: 24px;
+        font-weight: 600;
+    }
+
+    .card {
+        background: white;
+        padding: 20px;
+        margin: 16px auto;
+        border-radius: 12px;
+        max-width: 700px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .gauge-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .stage-value {
+        display: inline-block;
+        padding: 6px 12px;
+        background: #d1d1d1;
+        border-radius: 8px;
+        font-weight: 600;
+        margin-top: 4px;
+    }
+
+    .updated {
+        font-size: 0.9rem;
+        color: #777;
+        margin-top: 8px;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Union County Flood Status</h2>
+
+<div class="card">
+  <div class="gauge-title">Lewisburg Gauge</div>
+  <div>Stage: <span id="lewis-stage" class="stage-value">Loading…</span></div>
+  <div class="updated">Updated: <span id="lewis-updated">—</span></div>
+</div>
+
+<div class="card">
+  <div class="gauge-title">Milton Gauge</div>
+  <div>Stage: <span id="milton-stage" class="stage-value">Loading…</span></div>
+  <div class="updated">Updated: <span id="milton-updated">—</span></div>
+</div>
+
+<script>
+async function loadGauge(siteId, stageEl, updatedEl) {
+  const url = `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${siteId}&parameterCd=00065`;
+
+  try {
+    const res = await fetch(url);
+    const json = await res.json();
+
+    const ts = json.value.timeSeries[0];
+    const value = ts.values[0].value[0].value;
+    const time = ts.values[0].value[0].dateTime;
+
+    document.getElementById(stageEl).textContent = value + " ft";
+    document.getElementById(updatedEl).textContent = new Date(time).toLocaleString();
+
+  } catch (e) {
+    document.getElementById(stageEl).textContent = "No Data";
+    document.getElementById(updatedEl).textContent = "—";
+    console.error("Gauge Error:", e);
+  }
+}
+
+loadGauge("01553500", "lewis-stage", "lewis-updated");
+loadGauge("01555000", "milton-stage", "milton-updated");
+</script>
+
+</body>
+</html>
