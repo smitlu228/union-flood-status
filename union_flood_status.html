@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Union County Flood Status</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f3f4f6;
+        margin: 0;
+        padding: 30px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 14px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 30px;
+        color: #0057A6; /* Union Blue */
+    }
+
+    .gauge-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .gauge-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .label {
+        font-weight: 600;
+    }
+
+    .badge {
+        display: inline-block;
+        margin-top: 6px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: white;
+    }
+
+    .timestamp {
+        margin-top: 10px;
+        color: #555;
+        font-size: 13px;
+    }
+
+    .no-data {
+        background: #999;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>Union County Flood Status</h1>
+
+    <!-- Lewisburg -->
+    <div class="gauge-card" id="card-lewisburg">
+        <div class="gauge-title">Lewisburg Gauge</div>
+        <div>Stage: <span id="lewisburg-ft">Loading...</span></div>
+        <div class="badge no-data" id="lewisburg-cat">Loading</div>
+        <div class="timestamp" id="lewisburg-time">Updated: —</div>
+    </div>
+
+    <!-- Milton -->
+    <div class="gauge-card" id="card-milton">
+        <div class="gauge-title">Milton Gauge</div>
+        <div>Stage: <span id="milton-ft">Loading...</span></div>
+        <div class="badge no-data" id="milton-cat">Loading</div>
+        <div class="timestamp" id="milton-time">Updated: —</div>
+    </div>
+
+</div>
+
+<script>
+/* --------------------------- FETCH USGS GAUGE --------------------------- */
+
+async function fetchGauge(site) {
+    try {
+        const url = `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${site}&parameterCd=00065`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const raw = data.value.timeSeries[0].values[0].value[0];
+        return {
+            ft: parseFloat(raw.value),
+            time: new Date(raw.dateTime).toLocaleString()
+        };
+
+    } catch (e) {
+        console.log("USGS fetch error:", e);
+        return { ft: null, time: null };
+    }
+}
+
+/* --------------------------- FLOOD CATEGORY --------------------------- */
+
+function floodCategory(ft) {
+    if (ft === null) return { label: "No Data", color: "#777" };
+    if (ft >= 32.4) return { label: "Record Flooding", color: "#7f0000" };
+    if (ft >= 28) return { label: "Major Flooding", color: "#d7301f" };
+    if (ft >= 24) return { label: "Moderate Flooding", color: "#fc8d59" };
+    if (ft >= 20) return { label: "Minor Flooding", color: "#fdcc8a" };
+    return { label: "Normal", color: "#74c476" };
+}
+
+/* --------------------------- UPDATE UI --------------------------- */
+
+async function update() {
+    await updateGauge("01553500", "lewisburg");
+    await updateGauge("01554000", "milton");
+}
+
+async function updateGauge(site, id) {
+    const gauge = await fetchGauge(site);
+    const cat = floodCategory(gauge.ft);
+
+    // Numbers
+    document.getElementById(id + "-ft").innerText =
+        gauge.ft ? gauge.ft.toFixed(1) + " ft" : "No Data";
+
+    // Badge
+    const badge = document.getElementById(id + "-cat");
+    badge.innerText = cat.label;
+    badge.style.background = cat.color;
+
+    // Timestamp
+    document.getElementById(id + "-time").innerText =
+        gauge.time ? "Updated: " + gauge.time : "Updated: —";
+}
+
+/* --------------------------- AUTO REFRESH --------------------------- */
+
+update();
+setInterval(update, 300000); // every 5 minutes
+</script>
+
+</body>
+</html>
