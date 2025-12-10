@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Snyder County Flood Status</title>
+<title>Union County Flood Status</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap">
 
 <style>
@@ -10,7 +10,7 @@
         font-family: 'Inter', sans-serif;
         background: #f4f5f7;
         margin: 0;
-        padding-top: 10px;
+        padding-top: 10px;  /* Pull content to top */
         padding-left: 16px;
         padding-right: 16px;
         padding-bottom: 5px; /* VERY tight bottom spacing */
@@ -20,29 +20,24 @@
     h2 {
         text-align: center;
         color: #1259A7;
-        font-size: 1.6rem;
+        font-size: 1.6rem;    /* Slightly smaller */
         margin-top: 0;
-        margin-bottom: 12px;
+        margin-bottom: 12px;  /* Less space under title */
         font-weight: 600;
     }
 
     .card {
         background: #ffffff;
-        padding: 14px;
-        margin: 10px auto;
-        border-radius: 10px;
-        max-width: 650px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+        padding: 14px;                 /* Reduced from 20px */
+        margin: 10px auto;             /* Reduced vertical spacing */
+        border-radius: 10px;           /* Slightly smaller corners */
+        max-width: 650px;              /* Reduce width slightly */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.10);  
         display: flex;
         justify-content: space-between;
-        gap: 14px;
-        transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+        gap: 14px;                     /* Less gap between left/right */
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
         cursor: pointer;
-    }
-
-    .card:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 5px 12px rgba(0,0,0,0.15);
     }
 
     .left {
@@ -51,20 +46,20 @@
 
     .right {
         flex: 1;
-        font-size: 0.85rem;
+        font-size: 0.85rem;            /* Slightly smaller text */
         line-height: 1.2rem;
     }
 
     .gauge-title {
-        font-size: 1.05rem;
+        font-size: 1.05rem;            /* Reduced title size */
         font-weight: 600;
-        margin-bottom: 4px;
+        margin-bottom: 4px;            /* Tightened */
         color: #1B75BC;
     }
 
     .stage-value {
         display: inline-block;
-        padding: 4px 10px;
+        padding: 4px 10px;             /* Smaller badge */
         background: #d1d1d1;
         border-radius: 6px;
         font-weight: 600;
@@ -74,7 +69,7 @@
     }
 
     .flood-table div {
-        margin: 1px 0;
+        margin: 1px 0;                 /* Very tight table spacing */
         font-size: 0.85rem;
     }
 
@@ -89,83 +84,47 @@
     .card-yellow { background: #FFF9E2; }
     .card-orange { background: #FFEFD9; }
     .card-red    { background: #FBE3E3; }
+
 </style>
+
 </head>
 
 <body>
 
-<h2>Snyder County Flood Status</h2>
+<h2>Union County Flood Status</h2>
 
-<!-- 1) Sunbury Above Dam (USGS 01553990) -->
+<!-- Alphabetical: Allenwood, Lewisburg, Penns Creek, West Milton -->
+
+<!-- Allenwood -->
 <div class="card"
-     id="card-sunbury-above"
-     onclick="window.open('https://waterdata.usgs.gov/monitoring-location/01553990','_blank')">
-  <div class="left">
-    <div class="gauge-title">Susquehanna River Above Dam at Sunbury</div>
-    <div>Stage: <span id="sunbury-above-stage" class="stage-value">Loading…</span></div>
-  </div>
-
-  <div class="right flood-table">
-      <div><strong>Gauge Type:</strong> Auxiliary stage site above Fabridam</div>
-      <div><strong>Official Flood Categories:</strong> See below-dam gauge</div>
-      <div><strong>Record Crest:</strong> See USGS site for details</div>
-  </div>
-</div>
-
-<!-- 2) Sunbury (Below Dam) (USGS 01554000) -->
-<div class="card"
-     id="card-sunbury"
+     id="card-allenwood"
      data-action="20"
      data-minor="24"
      data-moderate="26"
-     data-major="34"
-     onclick="window.open('https://waterdata.usgs.gov/monitoring-location/01554000','_blank')">
+     data-major="30">
   <div class="left">
-    <div class="gauge-title">Susquehanna River at Sunbury</div>
-    <div>Stage: <span id="sunbury-stage" class="stage-value">Loading…</span></div>
+    <div class="gauge-title">Susquehanna River at Allenwood</div>
+    <div>Stage: <span id="allen-stage" class="stage-value">Loading…</span></div>
   </div>
 
   <div class="right flood-table">
       <div><strong>Action Stage:</strong> 20 ft</div>
       <div><strong>Minor Flood:</strong> 24 ft</div>
       <div><strong>Moderate Flood:</strong> 26 ft</div>
-      <div><strong>Major Flood:</strong> 34 ft</div>
-      <div><strong>Record Crest:</strong> 35.80 ft (1972)</div>
+      <div><strong>Major Flood:</strong> 30 ft</div>
+      <div><strong>Record Crest:</strong> 26.07 ft (2018)</div>
   </div>
 </div>
 
-<!-- 3) Penns Creek at Penns Creek (USGS 01555000) -->
-<div class="card"
-     id="card-pennscreek"
-     data-action="6"
-     data-minor="8"
-     data-moderate="10"
-     data-major="12"
-     onclick="window.open('https://waterdata.usgs.gov/monitoring-location/01555000','_blank')">
-  <div class="left">
-    <div class="gauge-title">Penns Creek at Penns Creek</div>
-    <div>Stage: <span id="penns-stage" class="stage-value">Loading…</span></div>
-  </div>
-
-  <div class="right flood-table">
-      <div><strong>Action Stage:</strong> 6 ft</div>
-      <div><strong>Minor Flood:</strong> 8 ft</div>
-      <div><strong>Moderate Flood:</strong> 10 ft</div>
-      <div><strong>Major Flood:</strong> 12 ft</div>
-      <div><strong>Record Crest:</strong> 14.85 ft (1972)</div>
-  </div>
-</div>
-
-<!-- 4) Lewisburg (USGS 01553500) -->
+<!-- Lewisburg -->
 <div class="card"
      id="card-lewisburg"
      data-action="14"
      data-minor="18"
      data-moderate="23"
-     data-major="28"
-     onclick="window.open('https://waterdata.usgs.gov/monitoring-location/01553500','_blank')">
+     data-major="28">
   <div class="left">
-    <div class="gauge-title">West Branch Susquehanna River at Lewisburg</div>
+    <div class="gauge-title">Susquehanna River at Lewisburg</div>
     <div>Stage: <span id="lewis-stage" class="stage-value">Loading…</span></div>
   </div>
 
@@ -174,7 +133,49 @@
       <div><strong>Minor Flood:</strong> 18 ft</div>
       <div><strong>Moderate Flood:</strong> 23 ft</div>
       <div><strong>Major Flood:</strong> 28 ft</div>
-      <div><strong>Record Crest:</strong> 34.23 ft (1972)</div>
+      <div><strong>Record Crest:</strong> 34.2 ft (1972)</div>
+  </div>
+</div>
+
+<!-- Penns Creek -->
+<div class="card"
+     id="card-pennscreek"
+     data-action="6"
+     data-minor="8"
+     data-moderate="10"
+     data-major="12">
+  <div class="left">
+    <div class="gauge-title">Penns Creek near Penns Creek</div>
+    <div>Stage: <span id="penns-stage" class="stage-value">Loading…</span></div>
+  </div>
+
+  <div class="right flood-table">
+      <div><strong>Action Stage:</strong> 6 ft</div>
+      <div><strong>Minor Flood:</strong> 8 ft</div>
+      <div><strong>Moderate Flood:</strong> 10 ft</div>
+      <div><strong>Major Flood:</strong> 12 ft</div>
+      <div><strong>High Water Level:</strong> 14.85 ft (1972)</div>
+  </div>
+</div>
+
+<!-- West Milton -->
+<div class="card"
+     id="card-westmilton"
+     data-action="16"
+     data-minor="19"
+     data-moderate="22"
+     data-major="25">
+  <div class="left">
+    <div class="gauge-title">Susquehanna River at West Milton</div>
+    <div>Stage: <span id="milton-stage" class="stage-value">Loading…</span></div>
+  </div>
+
+  <div class="right flood-table">
+      <div><strong>Action Stage:</strong> 16 ft</div>
+      <div><strong>Minor Flood:</strong> 19 ft</div>
+      <div><strong>Moderate Flood:</strong> 22 ft</div>
+      <div><strong>Major Flood:</strong> 25 ft</div>
+      <div><strong>Record Crest:</strong> 22.76 ft (2010)</div>
   </div>
 </div>
 
@@ -195,19 +196,13 @@ async function loadGauge(siteId, stageElementId, cardId) {
 
     badge.textContent = stage.toFixed(2) + " ft";
 
-    // Clear previous classes
     badge.classList.remove("badge-green","badge-yellow","badge-orange","badge-red");
     card.classList.remove("card-green","card-yellow","card-orange","card-red");
 
-    // If this card has no flood-category data, just show the stage and stop
     const action   = parseFloat(card.dataset.action);
     const minor    = parseFloat(card.dataset.minor);
     const moderate = parseFloat(card.dataset.moderate);
     const major    = parseFloat(card.dataset.major);
-
-    if (isNaN(action) || isNaN(minor) || isNaN(moderate) || isNaN(major)) {
-        return; // no color-coding for this gauge
-    }
 
     if (stage < action) {
         return;
@@ -232,14 +227,11 @@ async function loadGauge(siteId, stageElementId, cardId) {
 }
 
 // Load all gauges
-loadGauge("01553990", "sunbury-above-stage", "card-sunbury-above"); // Above Dam
-loadGauge("01554000", "sunbury-stage",       "card-sunbury");       // Sunbury (below dam)
-loadGauge("01555000", "penns-stage",         "card-pennscreek");    // Penns Creek
-loadGauge("01553500", "lewis-stage",         "card-lewisburg");     // Lewisburg
+loadGauge("01553025", "allen-stage",  "card-allenwood");  // Allenwood
+loadGauge("01553500", "lewis-stage",  "card-lewisburg");  // Lewisburg
+loadGauge("01555000", "penns-stage",  "card-pennscreek"); // Penns Creek
+loadGauge("01553240", "milton-stage", "card-westmilton"); // West Milton
 </script>
 
 </body>
 </html>
-
-
-
