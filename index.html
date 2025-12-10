@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -36,8 +36,13 @@
         display: flex;
         justify-content: space-between;
         gap: 14px;                     /* Less gap between left/right */
-        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+        transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
         cursor: pointer;
+    }
+
+    .card:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 12px rgba(0,0,0,0.15);
     }
 
     .left {
@@ -101,7 +106,8 @@
      data-action="20"
      data-minor="24"
      data-moderate="26"
-     data-major="30">
+     data-major="30"
+     onclick="window.open('https://waterdata.usgs.gov/monitoring-location/01553025','_blank')">
   <div class="left">
     <div class="gauge-title">Susquehanna River at Allenwood</div>
     <div>Stage: <span id="allen-stage" class="stage-value">Loading…</span></div>
@@ -122,7 +128,8 @@
      data-action="14"
      data-minor="18"
      data-moderate="23"
-     data-major="28">
+     data-major="28"
+     onclick="window.open('https://waterdata.usgs.gov/monitoring-location/01553500','_blank')">
   <div class="left">
     <div class="gauge-title">Susquehanna River at Lewisburg</div>
     <div>Stage: <span id="lewis-stage" class="stage-value">Loading…</span></div>
@@ -143,7 +150,8 @@
      data-action="6"
      data-minor="8"
      data-moderate="10"
-     data-major="12">
+     data-major="12"
+     onclick="window.open('https://waterdata.usgs.gov/monitoring-location/01555000','_blank')">
   <div class="left">
     <div class="gauge-title">Penns Creek near Penns Creek</div>
     <div>Stage: <span id="penns-stage" class="stage-value">Loading…</span></div>
@@ -164,7 +172,8 @@
      data-action="16"
      data-minor="19"
      data-moderate="22"
-     data-major="25">
+     data-major="25"
+     onclick="window.open('https://waterdata.usgs.gov/monitoring-location/01553240','_blank')">
   <div class="left">
     <div class="gauge-title">Susquehanna River at West Milton</div>
     <div>Stage: <span id="milton-stage" class="stage-value">Loading…</span></div>
